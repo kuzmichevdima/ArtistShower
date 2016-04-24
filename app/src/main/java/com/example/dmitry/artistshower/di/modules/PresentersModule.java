@@ -1,6 +1,7 @@
 package com.example.dmitry.artistshower.di.modules;
 
 
+import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
 import com.example.dmitry.artistshower.presenter.MainActivityPresenter;
 
 import javax.inject.Singleton;
@@ -13,7 +14,7 @@ public class PresentersModule {
 
     @Provides
     @Singleton
-    public MainActivityPresenter provideMainActivityPresenter() {
+    public IMainActivityPresenter provideMainActivityPresenter() {
         return new MainActivityPresenter();
     }
 }
