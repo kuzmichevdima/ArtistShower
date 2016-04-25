@@ -1,10 +1,12 @@
 package com.example.dmitry.artistshower.presenter;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.example.dmitry.artistshower.model.Artist;
 import com.example.dmitry.artistshower.model.AsyncTaskParseJson;
+import com.example.dmitry.artistshower.view.ArtistInfoActivity;
 import com.example.dmitry.artistshower.view.IMainActivity;
 
 import java.util.ArrayList;
@@ -42,7 +44,10 @@ public class MainActivityPresenter implements IMainActivityPresenter {
 
     @Override
     public void onArtistSelected(Artist artist) {
-
+        Intent intent = new Intent(mView.getContext(), ArtistInfoActivity.class);
+        intent.putExtra("Artist", artist);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        mView.getContext().startActivity(intent);
     }
 }
 

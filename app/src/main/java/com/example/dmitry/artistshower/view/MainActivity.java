@@ -1,5 +1,6 @@
 package com.example.dmitry.artistshower.view;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -36,6 +37,11 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
     //с помощью dagger 2 делаем inject презентера
     @Inject
     IMainActivityPresenter mPresenter;
+
+    @Override
+    public Context getContext() {
+        return getApplicationContext();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

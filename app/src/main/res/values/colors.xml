@@ -5,4 +5,5 @@
     <color name="colorAccent">#FF4081</color>
     <color name="toolbarColor">#FFFFFF</color>
     <color name="nameColor">#000000</color>
+    <color name="biographyColor">#000000</color>
 </resources>

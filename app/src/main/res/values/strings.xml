@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">ArtistShower</string>
-    <string name="action_settings">Settings</string>
+    <string name="biography_string">Биография</string>
+    <string name="artist_info_activity_string">Подробная информация</string>
 </resources>

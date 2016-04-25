@@ -1,28 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:weightSum="10">
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/artist_info_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary">
+
+        <TextView
+            android:id="@+id/artist_info_toolbar_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </android.support.v7.widget.Toolbar>
 
     <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+        android:id="@+id/artist_info_big_cover"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        />
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Добавить"
-        android:id="@+id/addlecturer_accept_button"
-        android:layout_alignParentBottom="true"
-        android:layout_toRightOf="@+id/imageView"
-        android:layout_toEndOf="@+id/imageView"
-        android:layout_marginLeft="24dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginBottom="217dp" />
+        style="@style/DefaultTextView"
+        android:id="@+id/artist_info_genres"
+        />
 
+    <TextView
+        style="@style/DefaultTextView"
+        android:id="@+id/artist_info_statistics"
+        />
+
+    <TextView
+        style="@style/NameTextView"
+        android:id="@+id/artist_info_biography_title"
+        android:text="@string/biography_string"
+        />
+
+    <TextView
+        style="@style/DefaultTextView"
+        android:id="@+id/artist_info_biography_text"
+        android:textColor="@color/biographyColor"
+        />
 
 </LinearLayout>

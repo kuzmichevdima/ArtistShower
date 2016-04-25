@@ -1,11 +1,12 @@
 package com.example.dmitry.artistshower.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by dmitry on 25.04.16.
  */
-public class Artist {
+public class Artist implements Serializable {
     private int mId;
     private String mName;
     private List<String> mGenres;
@@ -41,8 +42,15 @@ public class Artist {
         return mName;
     }
 
-    public List<String> getGenres() {
-        return mGenres;
+    public String getGenres() {
+        String result = "";
+        for (int i = 0; i < mGenres.size(); i++) {
+            result += mGenres.get(i);
+            if (i != mGenres.size() - 1) {
+                result += ", ";
+            }
+        }
+        return result;
     }
 
     //Нужно научиться получать правильную форму слова
@@ -68,11 +76,7 @@ public class Artist {
         return mAlbums + " " + additional;
     }
 
-    public String getmLink() {
-        return mLink;
-    }
-
-    public String getmDescription() {
+    public String getDescription() {
         return mDescription;
     }
 
@@ -80,7 +84,7 @@ public class Artist {
         return mSmallCover;
     }
 
-    public String getmBigCover() {
+    public String getBigCover() {
         return mBigCover;
     }
 }

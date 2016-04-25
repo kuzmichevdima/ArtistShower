@@ -1,6 +1,8 @@
 package com.example.dmitry.artistshower.di.modules;
 
 
+import com.example.dmitry.artistshower.presenter.ArtistInfoActivityPresenter;
+import com.example.dmitry.artistshower.presenter.IArtistInfoActivityPresenter;
 import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
 import com.example.dmitry.artistshower.presenter.MainActivityPresenter;
 
@@ -16,5 +18,11 @@ public class PresentersModule {
     @Singleton
     public IMainActivityPresenter provideMainActivityPresenter() {
         return new MainActivityPresenter();
+    }
+
+    @Provides
+    @Singleton
+    public IArtistInfoActivityPresenter provideArtistInfoActivityPresenter() {
+        return new ArtistInfoActivityPresenter();
     }
 }
