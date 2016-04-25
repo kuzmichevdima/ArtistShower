@@ -1,7 +1,7 @@
 package com.example.dmitry.artistshower.model;
 
 import android.os.AsyncTask;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
 
@@ -17,15 +17,10 @@ import java.util.List;
  */
 
 public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
-
-    final String tag = "AsyncTaskParseJson.java";
+    //презентер здесь нужен для того, чтоб уведомить об окончании парсинга (метод onParseFinished)
     IMainActivityPresenter mPresenter;
 
-    //TODO
-    // set your json string url here
-    String yourJsonStringUrl = "http://download.cdn.yandex.net/mobilization-2016/artists.json";
-    // contacts JSONArray
-    JSONArray dataJsonArr = null;
+    private String mUrl = "http://download.cdn.yandex.net/mobilization-2016/artists.json";
 
     public AsyncTaskParseJson(IMainActivityPresenter mPresenter) {
         this.mPresenter = mPresenter;
@@ -37,14 +32,9 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... arg0) {
         try {
+            JSONArray json = (new JsonParser(mPresenter.getContext())).getJSONFromUrl(mUrl);
 
-            // instantiate our json parser
-            JsonParser jParser = new JsonParser();
-
-            // get json string from url
-            JSONArray json = jParser.getJSONFromUrl(yourJsonStringUrl);
-
-            // loop through all users
+            //по очереди обрабатываем всех исполнителей
             for (int i = 0; i < json.length(); i++) {
 
                 JSONObject c = json.getJSONObject(i);
@@ -55,7 +45,6 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
                 for (int j = 0; j < genresArray.length(); j++) {
                     genres.add(genresArray.getString(j));
                 }
-                Log.d(tag, "genres = " + genres.toString());
                 int tracks = c.getInt("tracks");
                 int albums = c.getInt("albums");
                 String link = c.has("link") ? c.getString("link") : null;
@@ -65,8 +54,8 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
                 String bigCover = covers.getString("big");
                 mPresenter.addArtist(new Artist(id, name, genres, tracks, albums, link, description, smallCover, bigCover));
             }
-
         } catch (JSONException e) {
+            Toast.makeText(mPresenter.getContext(), "ошибка парсинга JSON", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 

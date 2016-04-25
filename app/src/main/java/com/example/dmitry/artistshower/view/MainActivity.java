@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +25,8 @@ import javax.inject.Inject;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+
+//В этом проекте используется принцип MVP, а также Dependency Injection (Butterknife и Dagger 2)
 
 public class MainActivity extends AppCompatActivity implements IMainActivity {
     //с использованием butterknife делаем bind элементов - это удобно и явно показывает, что нам нужно в этом activity
@@ -48,18 +49,21 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         App.getAppComponent(this).inject(this);
-        mToolbar.setTitle("Исполнители");
+        mToolbar.setTitle(R.string.main_activity_title);
         setSupportActionBar(mToolbar);
         initRecycler();
+        //вызываем метод презентера, загружающий данные
         mPresenter.onCreate(savedInstanceState, this);
         mPresenter.loadData();
     }
 
+    //это метод, который будет вызываться презентером (и его мы объявили в интерфейсе)
     @Override
     public void setArtists(List<Artist> artists) {
         ((ArtistAdapter) mRecycler.getAdapter()).setArtists(artists);
     }
 
+    //инициализация Recycler вынесена в отдельный метод для лучшей читабельности
     private void initRecycler() {
         LinearLayoutManager mLayoutManager = new LinearLayoutManager(this);
         mRecycler.setLayoutManager(mLayoutManager);
@@ -72,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
 
         public void setArtists(List<Artist> artists) {
             mArtists = artists;
-            //Log.d(tag, "ArtistAdapter mArtists size = " + mArtists.size());
             notifyDataSetChanged();
         }
 
@@ -92,6 +95,7 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+            //здесь мы делаем bind всех элементов одной карточки
             @Bind(R.id.main_artist_small_cover)
             ImageView mArtistSmallCover;
             @Bind(R.id.main_artist_name)
@@ -103,7 +107,7 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
             @Bind(R.id.main_artist_tracks)
             TextView mArtistTracks;
 
-            private Artist holderArtist;
+            private Artist mHolderArtist;
 
             ViewHolder(View item) {
                 super(item);
@@ -112,12 +116,12 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
             }
 
             public void bind(Artist artist) {
-                holderArtist = artist;
-                mArtistName.setText(holderArtist.getName());
-                mArtistGenres.setText(holderArtist.getGenres());
-                mArtistAlbums.setText(holderArtist.getAlbums());
-                mArtistTracks.setText(holderArtist.getTracks());
-                Picasso.with(getApplicationContext()).load(holderArtist.getSmallCover()).into(mArtistSmallCover);
+                mHolderArtist = artist;
+                mArtistName.setText(mHolderArtist.getName());
+                mArtistGenres.setText(mHolderArtist.getGenres());
+                mArtistAlbums.setText(mHolderArtist.getAlbums());
+                mArtistTracks.setText(mHolderArtist.getTracks());
+                Picasso.with(getApplicationContext()).load(mHolderArtist.getSmallCover()).into(mArtistSmallCover);
             }
 
             @Override

@@ -9,6 +9,8 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+//здесь мы описываем компонент приложения - AppComponent. Это нужно для inject
+
 @Singleton
 @Component(
         modules = {

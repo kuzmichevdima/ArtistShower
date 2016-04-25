@@ -6,6 +6,9 @@ import java.util.List;
 /**
  * Created by dmitry on 25.04.16.
  */
+
+//Класс для хранения всей информации про артиста
+
 public class Artist implements Serializable {
     private int mId;
     private String mName;
@@ -16,6 +19,8 @@ public class Artist implements Serializable {
     private String mDescription;
     private String mSmallCover;
     private String mBigCover;
+
+    //не удалось уйти от того, что конструктор принимает слишком много параметров (checkstyle это запрещает)
 
     public Artist(int mId, String mName, List<String> mGenres, int mTracks, int mAlbums, String mLink, String mDescription, String mSmallCover, String mBigCover) {
         this.mId = mId;
@@ -29,6 +34,7 @@ public class Artist implements Serializable {
         this.mBigCover = mBigCover;
     }
 
+    //для отладки переделывается метод toString
     @Override
     public String toString() {
         return "(id) = " + mId + "(name) = " + mName + " (genres)" + mGenres + "(tracks) = " + mTracks + " (link) = " + mLink;
@@ -42,6 +48,7 @@ public class Artist implements Serializable {
         return mName;
     }
 
+    //жанры выдаем всем списком через запятую
     public String getGenres() {
         String result = "";
         for (int i = 0; i < mGenres.size(); i++) {

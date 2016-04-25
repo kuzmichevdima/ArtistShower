@@ -1,6 +1,9 @@
 package com.example.dmitry.artistshower.model;
 
-import android.util.Log;
+import android.content.Context;
+import android.widget.Toast;
+
+import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -14,14 +17,18 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-public class JsonParser {
-    final String tag = "JsonParser.java";
-    static InputStream inputStream = null;
-    static JSONArray jObj = null;
-    static String json = "";
+import javax.inject.Inject;
+
+public final class JsonParser {
+    private Context mContext;
+
+    public JsonParser(Context context) {
+        mContext = context;
+    }
 
     public JSONArray getJSONFromUrl(String urlSource) {
-        //make HTTP request
+        //HTTP запрос
+        InputStream inputStream = null;
         try {
             URL url = new URL(urlSource);
             HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
@@ -29,11 +36,15 @@ public class JsonParser {
             urlConnection.setChunkedStreamingMode(0);
             inputStream = new BufferedInputStream(urlConnection.getInputStream());
         } catch (UnsupportedEncodingException e) {
+            Toast.makeText(mContext, "неправильная кодировка", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         } catch (IOException e) {
+            Toast.makeText(mContext, "ошибка ввода/вывода (IO)", Toast.LENGTH_LONG).show();
             e.printStackTrace();
         }
 
+        //с помощью BufferedReader считываем из inputStream
+        String json = "";
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
             StringBuilder sb = new StringBuilder();
@@ -44,14 +55,17 @@ public class JsonParser {
             inputStream.close();
             json = sb.toString();
         } catch (Exception e) {
-            Log.e(tag, "Error converting result " + e.toString());
+            Toast.makeText(mContext, "ошибка при чтении потока (неправильно указано кодировка?)", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         }
-        // try parse the string to a JSON object
+
+        //преобразуем полученную строку в json
+        JSONArray jObj = null;
         try {
             jObj = new JSONArray(json);
         } catch (JSONException e) {
-            String str = e.toString();
-            Log.e(tag, "(Error parsing data) " + str.substring(str.length() - 100));
+            Toast.makeText(mContext, "ошибка преобразования в JSONArray полученной строки", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
         }
 
         return jObj;
