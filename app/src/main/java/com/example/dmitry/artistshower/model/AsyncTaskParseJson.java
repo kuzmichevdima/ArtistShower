@@ -3,9 +3,14 @@ package com.example.dmitry.artistshower.model;
 import android.os.AsyncTask;
 import android.util.Log;
 
+import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by dmitry on 24.04.16.
@@ -14,15 +19,17 @@ import org.json.JSONObject;
 public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
 
     final String tag = "AsyncTaskParseJson.java";
+    IMainActivityPresenter mPresenter;
 
     //TODO
     // set your json string url here
     String yourJsonStringUrl = "http://download.cdn.yandex.net/mobilization-2016/artists.json";
-    //String yourJsonStringUrl = "http://demo.codeofaninja.com/tutorials/json-example-with-php/index.php";
-    //String yourJsonStringUrl = "http://cache-default05h.cdn.yandex.net/download.cdn.yandex.net/mobilization-2016/artists.json";
-
     // contacts JSONArray
     JSONArray dataJsonArr = null;
+
+    public AsyncTaskParseJson(IMainActivityPresenter mPresenter) {
+        this.mPresenter = mPresenter;
+    }
 
     @Override
     protected void onPreExecute() {}
@@ -36,25 +43,27 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
 
             // get json string from url
             JSONArray json = jParser.getJSONFromUrl(yourJsonStringUrl);
-            Log.d(tag, json == null ? "yes :("  : "no :)");
-            // get the array of users
-            dataJsonArr = json;
 
             // loop through all users
-            for (int i = 0; i < dataJsonArr.length(); i++) {
+            for (int i = 0; i < json.length(); i++) {
 
-                JSONObject c = dataJsonArr.getJSONObject(i);
-
-                // Storing each json item in variable
+                JSONObject c = json.getJSONObject(i);
+                Integer id = c.getInt("id");
                 String name = c.getString("name");
-                String tracks = c.getString("tracks");
-                String albums = c.getString("albums");
-
-                // show the values in our logcat
-                Log.e(tag, "name: " + name
-                        + ", tracks: " + tracks
-                        + ", albums: " + albums);
-
+                JSONArray genresArray = c.getJSONArray("genres");
+                List<String> genres = new ArrayList<String>();
+                for (int j = 0; j < genresArray.length(); j++) {
+                    genres.add(genresArray.getString(j));
+                }
+                Log.d(tag, "genres = " + genres.toString());
+                int tracks = c.getInt("tracks");
+                int albums = c.getInt("albums");
+                String link = c.has("link") ? c.getString("link") : null;
+                String description = c.getString("description");
+                JSONObject covers = c.getJSONObject("cover");
+                String smallCover = covers.getString("small");
+                String bigCover = covers.getString("big");
+                mPresenter.addArtist(new Artist(id, name, genres, tracks, albums, link, description, smallCover, bigCover));
             }
 
         } catch (JSONException e) {
@@ -65,5 +74,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected void onPostExecute(String strFromDoInBg) {}
+    protected void onPostExecute(String strFromDoInBg) {
+        mPresenter.onParseFinished();
+    }
 }

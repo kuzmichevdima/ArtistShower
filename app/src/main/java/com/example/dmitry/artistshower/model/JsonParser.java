@@ -35,14 +35,11 @@ public class JsonParser {
             e.printStackTrace();
         }
 
-        Log.d(tag, inputStream.toString());
-        //Read JSON data from inputStream
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
             StringBuilder sb = new StringBuilder();
             String line = null;
             while ((line = reader.readLine()) != null) {
-                Log.d(tag, "line = " + line);
                 sb.append(line + "\n");
             }
             inputStream.close();
@@ -50,8 +47,6 @@ public class JsonParser {
         } catch (Exception e) {
             Log.e(tag, "Error converting result " + e.toString());
         }
-
-        Log.d(tag, "json = " + json);
         // try parse the string to a JSON object
         try {
             jObj = new JSONArray(json);
