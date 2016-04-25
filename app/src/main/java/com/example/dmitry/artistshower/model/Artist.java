@@ -45,12 +45,27 @@ public class Artist {
         return mGenres;
     }
 
-    public int getmTracks() {
-        return mTracks;
+    //Нужно научиться получать правильную форму слова
+    private static int wordFormByNumber(int number) {
+        if (number % 10 == 1 && number % 100 != 11) {
+            return 1;
+        } else if (number % 10 >= 2 && number % 10 <= 4 && (number % 100 < 10 || number % 100 >= 20)) {
+            return 2;
+        } else {
+            return 3;
+        }
     }
 
-    public int getAlbums() {
-        return mAlbums;
+    public String getTracks() {
+        int wordForm = wordFormByNumber(mTracks);
+        String additional = (wordForm == 1 ? "песня" : wordForm == 2 ? "песни" : "песен");
+        return mTracks + " " + additional;
+    }
+
+    public String getAlbums() {
+        int wordForm = wordFormByNumber(mAlbums);
+        String additional = (wordForm == 1 ? "альбом" : wordForm == 2 ? "альбома" : "альбомов");
+        return mAlbums + " " + additional;
     }
 
     public String getmLink() {
@@ -61,7 +76,7 @@ public class Artist {
         return mDescription;
     }
 
-    public String getmSmallCover() {
+    public String getSmallCover() {
         return mSmallCover;
     }
 

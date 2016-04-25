@@ -16,6 +16,7 @@ import com.example.dmitry.artistshower.App;
 import com.example.dmitry.artistshower.R;
 import com.example.dmitry.artistshower.model.Artist;
 import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
     //с использованием butterknife делаем bind элементов - это удобно и явно показывает, что нам нужно в этом activity
     @Bind(R.id.artists_recycler)
     RecyclerView mRecycler;
-    @Bind(R.id.toolbar)
+    @Bind(R.id.main_toolbar)
     Toolbar mToolbar;
     //с помощью dagger 2 делаем inject презентера
     @Inject
@@ -107,7 +108,8 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
                 holderArtist = artist;
                 mArtistName.setText(holderArtist.getName());
                 mArtistGenres.setText(holderArtist.getGenres().toString());
-                //mArtistStatistics.setText(holderArtist.getAlbums());
+                mArtistStatistics.setText(holderArtist.getAlbums() + ", " + holderArtist.getTracks());
+                Picasso.with(getApplicationContext()).load(holderArtist.getSmallCover()).into(mArtistSmallCover);
             }
 
             @Override
