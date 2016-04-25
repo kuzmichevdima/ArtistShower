@@ -3,6 +3,7 @@ package com.example.dmitry.artistshower.presenter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import com.example.dmitry.artistshower.model.Artist;
 import com.example.dmitry.artistshower.model.AsyncTaskParseJson;
@@ -16,9 +17,9 @@ import java.util.List;
  * Created by dmitry on 24.04.16.
  */
 
-//этот презентер, как понятно из названия, занимается коммуникацией MainAcitivity и Model, т.е. служит промежуточным звеном
+//этот презентер, как понятно из названия, занимается коммуникацией MainActivity и SearchFragment и Model, т.е. служит промежуточным звеном
 
-public class MainActivityPresenter implements IMainActivityPresenter {
+public class Presenter implements IPresenter {
     private IMainActivity mView;
     private List<Artist> mArtistsList = null;
 
@@ -54,6 +55,20 @@ public class MainActivityPresenter implements IMainActivityPresenter {
     @Override
     public Context getContext() {
         return mView.getContext();
+    }
+
+    //этот же презентер поддерживает поиск по артистам
+    @Override
+    public void searchArtist(String name) {
+        if (mArtistsList != null) {
+            for (Artist artist : mArtistsList) {
+                if (artist.getName().equals(name)) {
+                    onArtistSelected(artist);
+                    return;
+                }
+            }
+        }
+        Toast.makeText(mView.getContext(), "нет артиста с именем " + name, Toast.LENGTH_LONG).show();
     }
 }
 

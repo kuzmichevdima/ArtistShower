@@ -1,7 +1,6 @@
 package com.example.dmitry.artistshower.model;
 
-import android.content.Context;
-import android.widget.Toast;
+import android.util.Log;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -16,11 +15,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 public final class JsonParser {
-    private Context mContext;
-
-    public JsonParser(Context context) {
-        mContext = context;
-    }
+    static final String mTag = "JsonParser";
 
     public JSONArray getJSONFromUrl(String urlSource) {
         //HTTP запрос
@@ -32,10 +27,10 @@ public final class JsonParser {
             urlConnection.setChunkedStreamingMode(0);
             inputStream = new BufferedInputStream(urlConnection.getInputStream());
         } catch (UnsupportedEncodingException e) {
-            Toast.makeText(mContext, "неправильная кодировка", Toast.LENGTH_LONG).show();
+            Log.e(mTag, "неправильная кодировка");
             e.printStackTrace();
         } catch (IOException e) {
-            Toast.makeText(mContext, "ошибка ввода/вывода (IO)", Toast.LENGTH_LONG).show();
+            Log.e(mTag, "ошибка ввода/вывода (IO)");
             e.printStackTrace();
         }
 
@@ -44,14 +39,14 @@ public final class JsonParser {
         try {
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "utf-8"));
             StringBuilder sb = new StringBuilder();
-            String line = null;
+            String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line + "\n");
             }
             inputStream.close();
             json = sb.toString();
         } catch (Exception e) {
-            Toast.makeText(mContext, "ошибка при чтении потока (неправильно указано кодировка?)", Toast.LENGTH_LONG).show();
+            Log.e(mTag, "ошибка при чтении потока (неправильно указано кодировка?)");
             e.printStackTrace();
         }
 
@@ -60,7 +55,7 @@ public final class JsonParser {
         try {
             jObj = new JSONArray(json);
         } catch (JSONException e) {
-            Toast.makeText(mContext, "ошибка преобразования в JSONArray полученной строки", Toast.LENGTH_LONG).show();
+            Log.e(mTag, "ошибка преобразования в JSONArray полученной строки");
             e.printStackTrace();
         }
 

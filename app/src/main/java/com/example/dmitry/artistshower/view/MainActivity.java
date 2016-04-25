@@ -1,5 +1,6 @@
 package com.example.dmitry.artistshower.view;
 
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +8,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -15,7 +19,7 @@ import android.widget.TextView;
 import com.example.dmitry.artistshower.App;
 import com.example.dmitry.artistshower.R;
 import com.example.dmitry.artistshower.model.Artist;
-import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
+import com.example.dmitry.artistshower.presenter.IPresenter;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,7 +31,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 //В этом проекте используется принцип MVP, а также Dependency Injection (Butterknife и Dagger 2)
-
+//Помимо минимальных требований, есть еще поиск артиста по имени (вызывается через нажатие на символ лупы в правом верхнем углу основного экрана
 public class MainActivity extends AppCompatActivity implements IMainActivity {
     //с использованием butterknife делаем bind элементов - это удобно и явно показывает, что нам нужно в этом activity
     @Bind(R.id.artists_recycler)
@@ -36,7 +40,7 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
     Toolbar mToolbar;
     //с помощью dagger 2 делаем inject презентера
     @Inject
-    IMainActivityPresenter mPresenter;
+    IPresenter mPresenter;
 
     @Override
     public Context getContext() {
@@ -70,6 +74,24 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
         mRecycler.setAdapter(new ArtistAdapter());
     }
 
+    //в меню у нас один только пункт - поиск, обозначенный символом лупы
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.main_activity_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == R.id.start_search) {
+            FragmentTransaction ft = (getFragmentManager().beginTransaction());
+            SearchFragment dialog = new SearchFragment();
+            dialog.show(ft, "Search Fragment");
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public class ArtistAdapter extends RecyclerView.Adapter<ArtistAdapter.ViewHolder> {
 
         private List<Artist> mArtists = new ArrayList<>();
@@ -91,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
 
         @Override
         public int getItemCount() {
-            return mArtists.size();
+            return mArtists == null ? 0 : mArtists.size();
         }
 
         class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {

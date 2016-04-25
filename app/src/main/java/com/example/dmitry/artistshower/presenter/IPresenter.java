@@ -11,11 +11,12 @@ import com.example.dmitry.artistshower.view.IMainActivity;
  */
 //в силу принципа MVP, View и Model не должны знать конкретный класс Presenter, а только его интерфейс
 
-public interface IMainActivityPresenter {
+public interface IPresenter {
     void onCreate(Bundle state, IMainActivity v);
     void loadData();
     void addArtist(Artist artist);
     void onArtistSelected(Artist artist);
     void onParseFinished();
     Context getContext();
+    void searchArtist(String name);
 }

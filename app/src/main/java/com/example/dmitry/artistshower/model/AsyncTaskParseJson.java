@@ -1,9 +1,9 @@
 package com.example.dmitry.artistshower.model;
 
 import android.os.AsyncTask;
-import android.widget.Toast;
+import android.util.Log;
 
-import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
+import com.example.dmitry.artistshower.presenter.IPresenter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -18,11 +18,12 @@ import java.util.List;
 
 public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     //презентер здесь нужен для того, чтоб уведомить об окончании парсинга (метод onParseFinished)
-    IMainActivityPresenter mPresenter;
+    IPresenter mPresenter;
 
     private String mUrl = "http://download.cdn.yandex.net/mobilization-2016/artists.json";
+    private static final String mTag = "AsyncTaskParseJson";
 
-    public AsyncTaskParseJson(IMainActivityPresenter mPresenter) {
+    public AsyncTaskParseJson(IPresenter mPresenter) {
         this.mPresenter = mPresenter;
     }
 
@@ -32,8 +33,10 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... arg0) {
         try {
-            JSONArray json = (new JsonParser(mPresenter.getContext())).getJSONFromUrl(mUrl);
-
+            JSONArray json = (new JsonParser()).getJSONFromUrl(mUrl);
+            if (json == null) {
+                return null;
+            }
             //по очереди обрабатываем всех исполнителей
             for (int i = 0; i < json.length(); i++) {
 
@@ -55,7 +58,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
                 mPresenter.addArtist(new Artist(id, name, genres, tracks, albums, link, description, smallCover, bigCover));
             }
         } catch (JSONException e) {
-            Toast.makeText(mPresenter.getContext(), "ошибка парсинга JSON", Toast.LENGTH_LONG).show();
+            Log.e(mTag, "ошибка парсинга JSON");
             e.printStackTrace();
         }
 

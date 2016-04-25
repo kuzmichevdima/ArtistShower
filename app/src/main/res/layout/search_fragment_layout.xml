@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/DefaultVerticalRelativeLayout"
+    xmlns:app="http://schemas.android.com/apk/res-auto" >
+
+    <android.support.v7.widget.Toolbar
+        style="@style/DefaultToolbar"
+        android:id="@+id/search_toolbar"
+        app:titleTextColor="@color/toolbarColor" />
+
+    <EditText
+        style="@style/DefaultEditText"
+        android:id="@+id/search_name"
+        android:hint="Имя исполнителя"
+        android:layout_below="@id/search_toolbar" />
+
+</RelativeLayout>
