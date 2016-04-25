@@ -16,34 +16,52 @@
             android:layout_height="wrap_content"/>
     </android.support.v7.widget.Toolbar>
 
-    <ImageView
-        android:id="@+id/artist_info_big_cover"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitCenter"
-        />
+        android:layout_height="match_parent"
+        android:layout_below="@+id/scroolView">
 
-    <TextView
-        style="@style/DefaultTextView"
-        android:id="@+id/artist_info_genres"
-        />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
 
-    <TextView
-        style="@style/DefaultTextView"
-        android:id="@+id/artist_info_statistics"
-        />
+            <ImageView
+                android:id="@+id/artist_info_big_cover"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"
+                />
 
-    <TextView
-        style="@style/NameTextView"
-        android:id="@+id/artist_info_biography_title"
-        android:text="@string/biography_string"
-        />
+            <TextView
+                style="@style/DefaultTextView"
+                android:id="@+id/artist_info_genres"
+                android:layout_marginLeft="5dp"
+                />
 
-    <TextView
-        style="@style/DefaultTextView"
-        android:id="@+id/artist_info_biography_text"
-        android:textColor="@color/biographyColor"
-        />
+            <TextView
+                style="@style/DefaultTextView"
+                android:id="@+id/artist_info_statistics"
+                android:layout_marginLeft="5dp"
+                />
+
+            <TextView
+                style="@style/NameTextView"
+                android:id="@+id/artist_info_biography_title"
+                android:text="@string/biography_string"
+                android:layout_marginLeft="5dp"
+                />
+
+            <TextView
+                style="@style/DefaultTextView"
+                android:id="@+id/artist_info_biography_text"
+                android:textColor="@color/biographyColor"
+                android:layout_marginLeft="5dp"
+                />
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

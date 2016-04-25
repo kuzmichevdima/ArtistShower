@@ -28,7 +28,6 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements IMainActivity {
-    static final String tag = "MainActivity";
     //с использованием butterknife делаем bind элементов - это удобно и явно показывает, что нам нужно в этом activity
     @Bind(R.id.artists_recycler)
     RecyclerView mRecycler;
@@ -73,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
 
         public void setArtists(List<Artist> artists) {
             mArtists = artists;
-            Log.d(tag, "ArtistAdapter mArtists size = " + mArtists.size());
+            //Log.d(tag, "ArtistAdapter mArtists size = " + mArtists.size());
             notifyDataSetChanged();
         }
 
@@ -99,8 +98,10 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
             TextView mArtistName;
             @Bind(R.id.main_artist_genres)
             TextView mArtistGenres;
-            @Bind(R.id.main_artist_statistics)
-            TextView mArtistStatistics;
+            @Bind(R.id.main_artist_albums)
+            TextView mArtistAlbums;
+            @Bind(R.id.main_artist_tracks)
+            TextView mArtistTracks;
 
             private Artist holderArtist;
 
@@ -113,8 +114,9 @@ public class MainActivity extends AppCompatActivity implements IMainActivity {
             public void bind(Artist artist) {
                 holderArtist = artist;
                 mArtistName.setText(holderArtist.getName());
-                mArtistGenres.setText(holderArtist.getGenres().toString());
-                mArtistStatistics.setText(holderArtist.getAlbums() + ", " + holderArtist.getTracks());
+                mArtistGenres.setText(holderArtist.getGenres());
+                mArtistAlbums.setText(holderArtist.getAlbums());
+                mArtistTracks.setText(holderArtist.getTracks());
                 Picasso.with(getApplicationContext()).load(holderArtist.getSmallCover()).into(mArtistSmallCover);
             }
 

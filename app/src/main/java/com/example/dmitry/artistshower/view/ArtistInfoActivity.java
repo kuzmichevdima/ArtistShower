@@ -46,10 +46,9 @@ public class ArtistInfoActivity extends AppCompatActivity implements IArtistInfo
             manageToolBar(artist.getName());
             Picasso.with(getApplicationContext()).load(artist.getBigCover()).into(mBigCover);
             mGenres.setText(artist.getGenres().toString());
-            mStatistics.setText(artist.getAlbums() + ", " + artist.getTracks());
+            mStatistics.setText(artist.getAlbums() + " \u2022 " + artist.getTracks());
             mBiographyText.setText(artist.getDescription());
-        }
-        else Log.e("mytag", "intent is null");
+        } else Log.e("mytag", "intent is null");
 
 
     }
@@ -57,7 +56,7 @@ public class ArtistInfoActivity extends AppCompatActivity implements IArtistInfo
     private void manageToolBar(String artistName) {
         mToolBar.setTitle(artistName);
         mToolBar.setTitleTextColor(Color.WHITE);
-        mToolBar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        mToolBar.setNavigationIcon(R.drawable.ic_back);
         setSupportActionBar(mToolBar);
         mToolBar.setNavigationOnClickListener(this);
     }

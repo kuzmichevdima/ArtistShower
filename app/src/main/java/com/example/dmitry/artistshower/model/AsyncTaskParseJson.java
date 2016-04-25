@@ -32,7 +32,7 @@ public class AsyncTaskParseJson extends AsyncTask<String, String, String> {
     }
 
     @Override
-    protected void onPreExecute() {}
+    protected void onPreExecute() { }
 
     @Override
     protected String doInBackground(String... arg0) {

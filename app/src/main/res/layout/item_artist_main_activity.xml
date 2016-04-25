@@ -17,14 +17,15 @@
             android:id="@+id/main_artist_small_cover"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="8dp"
-            android:layout_weight="2"
+            android:layout_weight="35"
+            android:layout_gravity="left"
             />
 
         <RelativeLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_weight="3"
+            android:layout_weight="65"
+            android:layout_marginLeft="20dp"
             >
 
             <TextView
@@ -39,9 +40,13 @@
 
             <TextView
                 style="@style/DefaultTextView"
-                android:id="@+id/main_artist_statistics"
-                android:layout_below="@id/main_artist_genres"
-                android:layout_alignParentBottom="true"/>
+                android:id="@+id/main_artist_albums"
+                android:layout_below="@id/main_artist_genres" />
+
+            <TextView
+                style="@style/DefaultTextView"
+                android:id="@+id/main_artist_tracks"
+                android:layout_below="@id/main_artist_albums" />
 
         </RelativeLayout>
 

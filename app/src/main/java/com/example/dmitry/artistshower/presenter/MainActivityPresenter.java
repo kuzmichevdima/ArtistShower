@@ -2,7 +2,6 @@ package com.example.dmitry.artistshower.presenter;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.example.dmitry.artistshower.model.Artist;
 import com.example.dmitry.artistshower.model.AsyncTaskParseJson;
@@ -18,7 +17,6 @@ import java.util.List;
 public class MainActivityPresenter implements IMainActivityPresenter {
     private IMainActivity mView;
     private List<Artist> mArtistsList = null;
-    private final String tag = "MainActivityPresenter";
 
     public void onCreate(Bundle state, IMainActivity view) {
         mView = view;
@@ -30,7 +28,7 @@ public class MainActivityPresenter implements IMainActivityPresenter {
 
     @Override
     public void addArtist(Artist artist) {
-        Log.d(tag, "MainAcitvityPresenter add " + artist.toString());
+        //Log.d(tag, "MainAcitvityPresenter add " + artist.toString());
         if (mArtistsList == null) {
             mArtistsList = new ArrayList<Artist>();
         }
