@@ -3,8 +3,6 @@ package com.example.dmitry.artistshower.model;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.dmitry.artistshower.presenter.IMainActivityPresenter;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 
@@ -16,8 +14,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-
-import javax.inject.Inject;
 
 public final class JsonParser {
     private Context mContext;

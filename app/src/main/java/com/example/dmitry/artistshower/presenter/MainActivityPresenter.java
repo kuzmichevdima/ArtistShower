@@ -12,8 +12,6 @@ import com.example.dmitry.artistshower.view.IMainActivity;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.inject.Inject;
-
 /**
  * Created by dmitry on 24.04.16.
  */
